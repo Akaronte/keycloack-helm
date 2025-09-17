@@ -9,8 +9,6 @@ spec:
     id: my-realm
     realm: my-realm
     enabled: true
-
-    # Configuración de conexión a LDAP
     userFederationProviders:
       - displayName: "ldap-provider"
         providerName: ldap
@@ -19,7 +17,7 @@ spec:
           enabled: "true"
           importEnabled: "true"
           syncRegistrations: "true"
-          vendor: "other"                           # o "ad" si es Active Directory
+          vendor: "other"
           connectionUrl: 'ldap://ldap.kubedevops:389'
           usersDn: 'ou=users,dc=ldap,dc=kubedevops,dc=com'
           bindCredential: mondariz10
@@ -27,8 +25,6 @@ spec:
           uuidLDAPAttribute: "entryUUID"
           userObjectClasses: "inetOrgPerson, organizationalPerson"
           searchScope: "1"
-
-    # Mapper de grupos LDAP → Keycloak
     userFederationMappers:
       - name: "groups"
         federationProviderDisplayName: "ldap-provider"
@@ -43,8 +39,6 @@ spec:
           preserveGroupInheritance: "true"
           ignoreMissingGroups: "true"
           dropNonExistingGroupsDuringSync: "true"
-
-    # Cliente OIDC para ArgoCD
     clients:
       - clientId: argocd
         enabled: true
