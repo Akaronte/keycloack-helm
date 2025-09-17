@@ -1,0 +1,5 @@
+apiVersion: v2
+name: keycloack
+description: A Helm chart for deploying a keycloack
+version: 0.1.0
+appVersion: "1.0"
