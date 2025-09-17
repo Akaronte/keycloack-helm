@@ -10,4 +10,4 @@ spec:
   http:
     httpEnabled: true
     httpPort: 8080
-    tlsSecret: keycloack-certificado-tls
+    tlsSecret: keycloack-issuer-account-key
