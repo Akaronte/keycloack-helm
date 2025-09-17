@@ -26,6 +26,8 @@ spec:
           uuidLDAPAttribute: "entryUUID"
           userObjectClasses: "inetOrgPerson, organizationalPerson"
           searchScope: "1"
+          editMode: 
+           - "READ_ONLY"
     userFederationMappers:
       - name: "groups"
         federationProviderDisplayName: "ldap-provider"
