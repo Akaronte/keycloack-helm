@@ -1,58 +1,64 @@
-# apiVersion: k8s.keycloak.org/v2alpha1
-# kind: KeycloakRealmImport
-# metadata:
-#   name: example-keycloak-realm-import
-# spec:
-#   keycloakCRName: example-keycloak
-#   realm:
-#     clients:
-#       - enabled: true
-#         redirectUris:
-#           - 'https://argocd-server-argocd.apps.kube2.okd.piensoluegoinstalo.com'
-#         serviceAccountsEnabled: true
-#         clientId: argocd
-#         defaultClientScopes:
-#           - email
-#           - profile
-#           - roles
-#           - groups
-#         implicitFlowEnabled: false
-#         secret: supersecret-argocd-client
-#         publicClient: false
-#         standardFlowEnabled: true
-#         protocol: openid-connect
-#         directAccessGrantsEnabled: true
-#     enabled: true
-#     id: my-realm
-#     realm: my-realm
-#     userFederationMappers:
-#       - config:
-#           membershipAttributeType: DN
-#           mode: READ_ONLY
-#           ignoreMissingGroups: 'true'
-#           groupNameLdapAttribute: cn
-#           membershipUserLdapAttribute: uid
-#           preserveGroupInheritance: 'true'
-#           dropNonExistingGroupsDuringSync: 'true'
-#           groupsDn: 'ou=Groups,dc=ldap,dc=kubedevops,dc=com'
-#           membershipLdapAttribute: memberOf
-#         federationMapperType: group-ldap-mapper
-#         federationProviderDisplayName: ldap-provider
-#         name: groups
-#     userFederationProviders:
-#       - config:
-#           enabled: 'true'
-#           bindDn: 'cn=admin,dc=ldap,dc=kubedevops,dc=com'
-#           vendor: other
-#           searchScope: '1'
-#           connectionUrl: 'ldap://ldap.kubedevops:389'
-#           usersDn: 'ou=users,dc=ldap,dc=kubedevops,dc=com'
-#           bindCredential: mondariz10
-#           rdnLDAPAttribute: uid
-#           uuidLDAPAttribute: entryUUID
-#           userObjectClasses: 'inetOrgPerson, organizationalPerson'
-#           importEnabled: 'true'
-#           syncRegistrations: 'true'
-#         displayName: ldap-provider
-#         priority: 0
-#         providerName: ldap
+apiVersion: k8s.keycloak.org/v2alpha1
+kind: KeycloakRealmImport
+metadata:
+  name: example-keycloak-realm-import
+  namespace: keycloak
+spec:
+  keycloakCRName: example-keycloak   # nombre de tu instancia Keycloak (Keycloak CR)
+  realm:
+    id: my-realm
+    realm: my-realm
+    enabled: true
+
+    # Configuración de conexión a LDAP
+    userFederationProviders:
+      - displayName: "ldap-provider"
+        providerName: ldap
+        priority: 0
+        config:
+          enabled: "true"
+          importEnabled: "true"
+          syncRegistrations: "true"
+          vendor: "other"                           # o "ad" si es Active Directory
+          connectionUrl: 'ldap://ldap.kubedevops:389'
+          usersDn: 'ou=users,dc=ldap,dc=kubedevops,dc=com'
+          bindCredential: mondariz10
+          rdnLDAPAttribute: "uid"
+          uuidLDAPAttribute: "entryUUID"
+          userObjectClasses: "inetOrgPerson, organizationalPerson"
+          searchScope: "1"
+
+    # Mapper de grupos LDAP → Keycloak
+    userFederationMappers:
+      - name: "groups"
+        federationProviderDisplayName: "ldap-provider"
+        federationMapperType: group-ldap-mapper
+        config:
+          mode: "READ_ONLY"
+          membershipLdapAttribute: "memberOf"
+          membershipAttributeType: "DN"
+          membershipUserLdapAttribute: "uid"
+          groupsDn: 'ou=Groups,dc=ldap,dc=kubedevops,dc=com'
+          groupNameLdapAttribute: "cn"
+          preserveGroupInheritance: "true"
+          ignoreMissingGroups: "true"
+          dropNonExistingGroupsDuringSync: "true"
+
+    # Cliente OIDC para ArgoCD
+    clients:
+      - clientId: argocd
+        enabled: true
+        protocol: openid-connect
+        publicClient: false
+        secret: supersecret-argocd-client
+        redirectUris:
+          - "https://argocd.example.com/auth/callback"
+        standardFlowEnabled: true
+        directAccessGrantsEnabled: true
+        implicitFlowEnabled: false
+        serviceAccountsEnabled: true
+        defaultClientScopes:
+          - email
+          - profile
+          - roles
+          - groups
