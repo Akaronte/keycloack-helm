@@ -9,9 +9,9 @@ spec:
   duration: 2160h
   renewBefore: 360h
   issuerRef:
-    kind: ClusterIssuer
-    name: letsencrypt-prod
-  secretName: keycloackSecretNameTls
+    kind: Issuer
+    name: keycloack-issuer
+  secretName: keycloack-issuer-account-key
   usages:
     - server auth
     - client auth
