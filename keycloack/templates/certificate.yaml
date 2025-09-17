@@ -11,7 +11,7 @@ spec:
   issuerRef:
     kind: ClusterIssuer
     name: letsencrypt-prod
-  secretName: keycloack-secretName-tls
+  secretName: keycloackSecretNameTls
   usages:
     - server auth
     - client auth
