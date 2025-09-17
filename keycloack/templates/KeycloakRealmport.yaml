@@ -4,7 +4,7 @@ metadata:
   name: example-keycloak-realm-import
   namespace: keycloak
 spec:
-  keycloakCRName: example-keycloak   # nombre de tu instancia Keycloak (Keycloak CR)
+  keycloakCRName: example-keycloak
   realm:
     id: my-realm
     realm: my-realm
