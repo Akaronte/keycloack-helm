@@ -1,0 +1,7 @@
+# Valores por defecto del chart keycloack
+# Puedes sobrescribirlos con --set o un archivo values personalizado
+
+hostname: "keycloack.apps.kube2.okd.piensoluegoinstalo.com"
+
+
+

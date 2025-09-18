@@ -1,61 +1,78 @@
-apiVersion: k8s.keycloak.org/v2alpha1
-kind: KeycloakRealmImport
-metadata:
-  labels:
-    app: sso
-  name: example-keycloak-realm-import
-spec:
-  keycloakCRName: example-keycloak
-  realm:
-    id: my-realm
-    realm: my-realm
-    enabled: true
-    userFederationProviders:
-      - displayName: "ldap-provider"
-        providerName: ldap
-        priority: 0
-        config:
-          enabled: "true"
-          importEnabled: "true"
-          syncRegistrations: "true"
-          vendor: "other"
-          connectionUrl: 'ldap://ldap.kubedevops:389'
-          usersDn: 'ou=users,dc=ldap,dc=kubedevops,dc=com'
-          bindCredential: mondariz10
-          rdnLDAPAttribute: "uid"
-          uuidLDAPAttribute: "entryUUID"
-          userObjectClasses: "inetOrgPerson, organizationalPerson"
-          searchScope: "1"
-          editMode: 
-           - "READ_ONLY"
-    userFederationMappers:
-      - name: "groups"
-        federationProviderDisplayName: "ldap-provider"
-        federationMapperType: group-ldap-mapper
-        config:
-          mode: "READ_ONLY"
-          membershipLdapAttribute: "memberOf"
-          membershipAttributeType: "DN"
-          membershipUserLdapAttribute: "uid"
-          groupsDn: 'ou=Groups,dc=ldap,dc=kubedevops,dc=com'
-          groupNameLdapAttribute: "cn"
-          preserveGroupInheritance: "true"
-          ignoreMissingGroups: "true"
-          dropNonExistingGroupsDuringSync: "true"
-    clients:
-      - clientId: argocd
-        enabled: true
-        protocol: openid-connect
-        publicClient: false
-        secret: supersecret-argocd-client
-        redirectUris:
-          - "https://argocd.example.com/auth/callback"
-        standardFlowEnabled: true
-        directAccessGrantsEnabled: true
-        implicitFlowEnabled: false
-        serviceAccountsEnabled: true
-        defaultClientScopes:
-          - email
-          - profile
-          - roles
-          - groups
+# apiVersion: k8s.keycloak.org/v2alpha1
+# kind: KeycloakRealmImport
+# metadata:
+#   name: example-keycloak-realm-import
+#   labels:
+#     app: sso
+# spec:
+#   keycloakCRName: example-keycloak
+#   realm:
+#     id: my-realm
+#     realm: my-realm
+#     enabled: true
+
+#     # 👇 scopes básicos para evitar warnings
+#     clientScopes:
+#       - name: email
+#         protocol: openid-connect
+#       - name: profile
+#         protocol: openid-connect
+#       - name: roles
+#         protocol: openid-connect
+#       - name: groups
+#         protocol: openid-connect
+
+#     # 👇 cliente ArgoCD
+#     clients:
+#       - clientId: argocd
+#         enabled: true
+#         protocol: openid-connect
+#         publicClient: false
+#         secret: supersecret-argocd-client
+#         redirectUris:
+#           - "https://argocd.example.com/auth/callback"
+#         standardFlowEnabled: true
+#         directAccessGrantsEnabled: true
+#         implicitFlowEnabled: false
+#         serviceAccountsEnabled: true
+#         defaultClientScopes:
+#           - email
+#           - profile
+#           - roles
+#           - groups
+
+#     # 👇 integración LDAP
+#     components:
+#       org.keycloak.storage.UserStorageProvider:
+#         - name: ldap-provider
+#           providerId: ldap
+#           config:
+#             enabled: ["true"]
+#             priority: ["0"]
+#             editMode: ["READ_ONLY"]
+#             importEnabled: ["true"]
+#             syncRegistrations: ["true"]
+#             vendor: ["other"]
+#             connectionUrl: ["ldap://ldap.kubedevops.com:389"]
+#             usersDn: ["ou=users,dc=kubedevops,dc=com"]
+#             bindDn: ["cn=admin,dc=kubedevops,dc=com"]
+#             bindCredential: ["mondariz10"]
+#             rdnLDAPAttribute: ["uid"]
+#             uuidLDAPAttribute: ["entryUUID"]
+#             userObjectClasses: ["inetOrgPerson, organizationalPerson"]
+#             searchScope: ["1"]
+
+#       org.keycloak.storage.ldap.mappers.LDAPStorageMapper:
+#         - name: groups
+#           providerId: group-ldap-mapper
+#           parentId: ldap-provider
+#           config:
+#             mode: ["READ_ONLY"]
+#             membershipLdapAttribute: ["memberOf"]
+#             membershipAttributeType: ["DN"]
+#             membershipUserLdapAttribute: ["uid"]
+#             groupsDn: [ "ou=Groups,dc=ldap,dc=kubedevops,dc=com" ]
+#             groupNameLdapAttribute: ["cn"]
+#             preserveGroupInheritance: ["true"]
+#             ignoreMissingGroups: ["true"]
+#             dropNonExistingGroupsDuringSync: ["true"]

@@ -5,9 +5,10 @@ metadata:
     app: sso
   name: example-keycloak
 spec:
-  hostname:
-    hostname: keycloack.ingress.kube2.okd.piensoluegoinstalo.com
+  hostname: {{ .Values.hostname | quote }}
   http:
     httpEnabled: true
     httpPort: 8080
     tlsSecret: keycloack-issuer-account-key
+  ingress:
+    enabled: false
