@@ -9,6 +9,6 @@ spec:
   http:
     # httpEnabled: true
     # httpPort: 8080
-    tlsSecret: keycloack-issuer-account-key
+    tlsSecret: keycloack-tls-ingress
   ingress:
     enabled: false
