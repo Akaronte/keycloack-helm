@@ -1,13 +1,13 @@
-kind: Service
-apiVersion: v1
-metadata:
-  name: example-keycloak-service
-spec:
-  ports:
-    - name: http
-      protocol: TCP
-      port: 8080
-  selector:
-    app: keycloak
-    app.kubernetes.io/instance: example-keycloak
+# kind: Service
+# apiVersion: v1
+# metadata:
+#   name: example-keycloak-service
+# spec:
+#   ports:
+#     - name: http
+#       protocol: TCP
+#       port: 8080
+#   selector:
+#     app: keycloak
+#     app.kubernetes.io/instance: example-keycloak
 
