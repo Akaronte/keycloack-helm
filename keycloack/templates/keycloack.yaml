@@ -9,6 +9,6 @@ spec:
   http:
     # httpEnabled: true
     # httpPort: 8080
-    tlsSecret: keycloack-tls-ingress
+    tlsSecret: {{ .Values.tlsSecret | quote }}
   ingress:
     enabled: false

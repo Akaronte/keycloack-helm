@@ -1,21 +1,21 @@
-apiVersion: cert-manager.io/v1
-kind: Certificate
-metadata:
-  name: keycloack-certificado-tls
-spec:
-  commonName: {{ .Values.hostname | quote }}
-  dnsNames:
-    - {{ .Values.hostname | quote }}
-  duration: 2160h
-  renewBefore: 360h
-  issuerRef:
-    kind: Issuer
-    name: keycloack-issuer
-  secretName: {{ .Values.http.tlsSecret | quote }}
-  usages:
-    - server auth
-    - client auth
-  privateKey:
-    algorithm: RSA
-    encoding: PKCS8
-    size: 4096
+# apiVersion: cert-manager.io/v1
+# kind: Certificate
+# metadata:
+#   name: keycloack-certificado-tls
+# spec:
+#   commonName: keycloack.ingress.kube2.okd.piensoluegoinstalo.com
+#   dnsNames:
+#     - keycloack.ingress.kube2.okd.piensoluegoinstalo.com
+#   duration: 2160h
+#   renewBefore: 360h
+#   issuerRef:
+#     kind: Issuer
+#     name: keycloack-issuer
+#   secretName: keycloack-issuer-account-key
+#   usages:
+#     - server auth
+#     - client auth
+#   privateKey:
+#     algorithm: RSA
+#     encoding: PKCS8
+#     size: 4096

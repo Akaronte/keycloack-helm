@@ -7,7 +7,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: keycloack.ingress.kube2.okd.piensoluegoinstalo.com
+    - host: {{ .Values.hostname | quote }}
       http:
         paths:
           # - path: /.well-known/acme-challenge/
@@ -26,5 +26,5 @@ spec:
                   number: 8443
   tls:
     - hosts:
-        - keycloack.ingress.kube2.okd.piensoluegoinstalo.com
-      secretName: keycloack-tls-ingress
+        - {{ .Values.hostname | quote }}
+      secretName: {{ .Values.tlsSecret | quote }}
