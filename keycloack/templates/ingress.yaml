@@ -23,7 +23,7 @@ spec:
               service:
                 name: example-keycloak-service
                 port:
-                  number: 8081
+                  number: 8443
   tls:
     - hosts:
         - keycloack.ingress.kube2.okd.piensoluegoinstalo.com
