@@ -10,18 +10,18 @@ spec:
     - host: keycloack.ingress.kube2.okd.piensoluegoinstalo.com
       http:
         paths:
-          - path: /.well-known/acme-challenge/
-            pathType: Prefix
-            backend:
-              service:
-                name: cm-acme-http-solver-bdjnm
-                port:
-                  number: 8089
+          # - path: /.well-known/acme-challenge/
+          #   pathType: Prefix
+          #   backend:
+          #     service:
+          #       name: cm-acme-http-solver-bdjnm
+          #       port:
+          #         number: 8089
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: keycloack
+                name: example-keycloak-service
                 port:
                   number: 8081
   tls:
