@@ -6,7 +6,7 @@ metadata:
   name: example-keycloak
 spec:
   hostname:
-    hostname: {{ .Values.hostname }}}
+    hostname: {{ .Values.hostname }}
   http:
     # httpEnabled: true
     # httpPort: 8080
