@@ -8,8 +8,8 @@ spec:
   hostname:
     hostname: {{ .Values.hostname }}
   http:
-    # httpEnabled: true
-    # httpPort: 8080
+    httpEnabled: true
+    httpPort: 8080
     tlsSecret: {{ .Values.tlsSecret }}
   ingress:
     enabled: false
