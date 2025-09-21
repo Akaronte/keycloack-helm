@@ -1,36 +1,26 @@
-apiVersion: networking.k8s.io/v1 
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: keycloack-tls-ingress
+  name: keycloak-tls-ingress
+  namespace: keycloack
   annotations:
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-    cert-manager.io/issuer: "keycloack-issuer"
-    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    nginx.ingress.kubernetes.io/ssl-passthrough: "true"   # importante para Keycloak
     nginx.ingress.kubernetes.io/secure-backends: "true"
-    nginx.ingress.kubernetes.io/proxy-ssl-verify: "false"
 spec:
   ingressClassName: nginx
-  rules:
-    - host: {{ .Values.hostname | quote }}
-      http:
-        paths:
-          # - path: /.well-known/acme-challenge/
-          #   pathType: Prefix
-          #   backend:
-          #     service:
-          #       name: cm-acme-http-solver-bdjnm
-          #       port:
-          #         number: 8089
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: example-keycloak-service
-                port:
-                  number: 8443
   tls:
-    - hosts:
-        - {{ .Values.hostname | quote }}
-      secretName: {{ .Values.tlsSecret | quote }}
+  - hosts:
+      - keycloack.ingress.kube2.okd.piensoluegoinstalo.com
+    secretName: keycloak-tls-secret
+  rules:
+  - host: keycloack.ingress.kube2.okd.piensoluegoinstalo.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: keycloak
+            port:
+              number: 8443   # ojo: el puerto HTTPS del servicio
