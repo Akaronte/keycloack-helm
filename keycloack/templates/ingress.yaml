@@ -8,10 +8,10 @@ metadata:
     cert-manager.io/issuer: "keycloack-issuer"
 spec:
   ingressClassName: nginx
-  tls:
-  - hosts:
-      - keycloack.ingress.kube2.okd.piensoluegoinstalo.com
-    secretName: keycloak-tls-secret
+  # tls:
+  # - hosts:
+  #     - keycloack.ingress.kube2.okd.piensoluegoinstalo.com
+  #   secretName: keycloak-tls-secret
   rules:
   - host: keycloack.ingress.kube2.okd.piensoluegoinstalo.com
     http:
