@@ -1,13 +1,12 @@
-kind: Service
 apiVersion: v1
+kind: Service
 metadata:
-  name: example-keycloak-service
+  name: keycloak
+  namespace: keycloack
 spec:
-  ports:
-    - name: https
-      protocol: TCP
-      port: 8443
   selector:
     app: keycloak
-    app.kubernetes.io/instance: example-keycloak
-
+  ports:
+    - protocol: TCP
+      port: 8443 
+      targetPort: 8443  
