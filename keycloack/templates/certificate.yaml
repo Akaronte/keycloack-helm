@@ -6,7 +6,6 @@ spec:
   commonName: keycloack.ingress.kube2.okd.piensoluegoinstalo.com
   dnsNames:
     - keycloack.ingress.kube2.okd.piensoluegoinstalo.com
-    - keycloack.contour.kube2.okd.piensoluegoinstalo.com
   duration: 2160h
   renewBefore: 360h
   issuerRef:
